@@ -1,22 +1,14 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
-import Home from '../views/Home.vue'
 
+// 路由规则
 const routes = [
-  {
-    path: '/',
-    name: 'Home',
-    component: Home
-  },
-  {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
-  }
+  
 ]
-
+/**
+ * 创建路由实例
+ * vue2.0  new VueRouter({})
+ * vue3.0  createRouter({})
+ */
 const router = createRouter({
   history: createWebHashHistory(),
   routes

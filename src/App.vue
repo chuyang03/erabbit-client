@@ -1,30 +1,57 @@
 <template>
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
+  <div>
+    <!-- 使用根模块的state属性 -->
+    <!-- <p>{{$store.state.username}}</p> -->
+
+    <!-- 使用根模块的getters计算属性，也可以写成 $store.getters['newName']-->
+    <!-- <p>{{$store.getters.newName}}</p> -->
+    <!-- <button @click="updateFn">更换name</button> -->
+
+    <hr>
+    <!-- 分模块调用 -->
+    <h3>分模块调用state数据</h3>
+    <p>{{$store.state.moduleA.username}}</p>
+    <p>{{$store.state.moduleB.username}}</p>
+
+    <!-- 分模块调用计算属性 -->
+    <h3>分模块计算属性</h3>
+    <p>{{$store.getters.newName}}</p>
+    <p>{{$store.getters['moduleB/newName']}}</p>
+
+    <!-- 分模块调用方法 -->
+
+    <button @click="updateNameB">分模块更改姓名</button>
   </div>
-  <router-view/>
 </template>
 
-<style lang="less">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script>
+import { useStore } from 'vuex';
+export default {
+  name: 'App',
+  setup() {
+    // 使用vuex仓库
+    const store = useStore()
+    console.log(store.state.username)
+    console.log(store.getters.newName)
 
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
+    const updateFn = () => {
+      // store.commit('updateName')
+      store.dispatch('updateName')
     }
+
+    // 分模块调用mutations
+    const updateNameB = () => {
+      store.commit('moduleB/updateName')
+    }
+
+    return {
+      updateFn,
+      updateNameB
+      }
   }
 }
+</script>
+
+<style>
+
 </style>
